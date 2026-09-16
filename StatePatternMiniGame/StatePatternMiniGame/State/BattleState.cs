@@ -16,14 +16,17 @@ public class BattleState : IGameState
 
     public void Enter(Game game)
     {
-        IsPlayerTurn = !IsPlayerTurn;
-        turnInfo = IsPlayerTurn ? "플레이어" : "적";
-        playerInfo = GetInfoString(game.Player);
-        enemyInfo = GetInfoString(game.Enemy);
+        IsPlayerTurn = true;
+        behaviourInfo = "";
+        game.ResetGame();
     }
 
     public void Render(Game game)
     {
+        turnInfo = IsPlayerTurn ? "플레이어" : "적";
+        playerInfo = GetInfoString(game.Player);
+        enemyInfo = GetInfoString(game.Enemy);
+        
         Console.WriteLine("======== BATTLE ========");
         Console.WriteLine($"  상태: {GetType().Name}");
         Console.WriteLine($"  턴: {turnInfo}");
@@ -73,12 +76,15 @@ public class BattleState : IGameState
         {
             EnemyAttack(game);
         }
+        
+        IsPlayerTurn = !IsPlayerTurn;
+        
+        if (game.Enemy.Hp <= 0) game.ChangeState(new VictoryState());
+        else if (game.Player.Hp <= 0) game.ChangeState(new GameOverState());
     }
 
     public void Exit(Game game)
     {
-        if (game.Enemy.Hp <= 0) game.ChangeState(new VictoryState());
-        else if (game.Player.Hp <= 0) game.ChangeState(new GameOverState());
     }
 
     private string GetInfoString(Actor actor)
@@ -105,7 +111,7 @@ public class BattleState : IGameState
 
     private void Attack(Game game)
     {
-        game.Enemy.Hp -= game.Player.Damage;
+        game.Enemy.Hp = Math.Clamp(game.Enemy.Hp - game.Player.Damage,0,game.Enemy.MaxHp) ;
         behaviourInfo = $"용사가 공격! 슬라임에게 {game.Player.Damage} 데미지...!";
     }
 
@@ -125,7 +131,7 @@ public class BattleState : IGameState
     {
         int damage = game.Enemy.Damage;
         if (IsActiveDefense) damage -= game.Player.Defense;
-        game.Player.Hp -= damage;
+        game.Player.Hp -= Math.Clamp(damage, 0, 100);
         
         IsActiveDefense = false;
         

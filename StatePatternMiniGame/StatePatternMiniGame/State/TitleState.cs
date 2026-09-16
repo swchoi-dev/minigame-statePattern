@@ -6,7 +6,6 @@ public class TitleState : IGameState
     
     public void Enter(Game game)
     {
-        
     }
 
     public void Render(Game game)
@@ -26,11 +25,11 @@ public class TitleState : IGameState
 
     public void Update(Game game)
     {
+        if (selected == 1) game.ChangeState(new BattleState());
+        if (selected == 2) game.IsRunning = false;
     }
 
     public void Exit(Game game)
     {
-        if (selected == 1) game.ChangeState(new BattleState());
-        if (selected == 2) game.IsRunning = false;
     }
 }

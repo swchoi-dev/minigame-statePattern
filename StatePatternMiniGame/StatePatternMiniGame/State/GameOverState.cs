@@ -27,12 +27,13 @@ public class GameOverState : IGameState
 
     public void Update(Game game)
     {
+        if (selected == 1) game.ChangeState(new BattleState());
+        if (selected == 2) game.ChangeState(new TitleState());
+        if (selected == 3) game.IsRunning = false;
     }
 
     public void Exit(Game game)
     {
-        if (selected == 1) game.ChangeState(new BattleState());
-        if (selected == 2) game.ChangeState(new TitleState());
-        if (selected == 3) game.IsRunning = false;
+        
     }
 }

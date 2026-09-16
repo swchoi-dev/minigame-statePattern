@@ -11,7 +11,7 @@ public class VictoryState : IGameState
     public void Render(Game game)
     {
         Console.WriteLine("========================");
-        Console.WriteLine("        GAME OVER       ");
+        Console.WriteLine("         VICTORY        ");
         Console.WriteLine("========================");
         Console.WriteLine("  슬라임을 물리쳤다!");
         Console.WriteLine($"  남은 HP: {game.Player.Hp}");
@@ -28,12 +28,13 @@ public class VictoryState : IGameState
 
     public void Update(Game game)
     {
+        if (selected == 1) game.ChangeState(new BattleState());
+        if (selected == 2) game.ChangeState(new TitleState());
+        if (selected == 3) game.IsRunning = false;
     }
 
     public void Exit(Game game)
     {
-        if (selected == 1) game.ChangeState(new BattleState());
-        if (selected == 2) game.ChangeState(new TitleState());
-        if (selected == 3) game.IsRunning = false;
+        
     }
 }
