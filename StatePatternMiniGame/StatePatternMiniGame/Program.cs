@@ -7,6 +7,8 @@ class StatePatternMiniGame
     public static void Main()
     {
         Game game = new Game(new TitleState());
+        game.Enter();
+        
         while (game.IsRunning)
         {
             Console.Clear();

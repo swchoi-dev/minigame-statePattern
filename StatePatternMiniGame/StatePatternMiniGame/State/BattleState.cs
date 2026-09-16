@@ -18,7 +18,7 @@ public class BattleState : IGameState
     {
         IsPlayerTurn = true;
         behaviourInfo = "";
-        game.ResetGame();
+        game.ResetBattle();
     }
 
     public void Render(Game game)
@@ -111,7 +111,7 @@ public class BattleState : IGameState
 
     private void Attack(Game game)
     {
-        game.Enemy.Hp = Math.Clamp(game.Enemy.Hp - game.Player.Damage,0,game.Enemy.MaxHp) ;
+        game.Enemy.Hp -= game.Player.Damage;
         behaviourInfo = $"용사가 공격! 슬라임에게 {game.Player.Damage} 데미지...!";
     }
 
@@ -131,7 +131,7 @@ public class BattleState : IGameState
     {
         int damage = game.Enemy.Damage;
         if (IsActiveDefense) damage -= game.Player.Defense;
-        game.Player.Hp -= Math.Clamp(damage, 0, 100);
+        game.Player.Hp -= damage;
         
         IsActiveDefense = false;
         

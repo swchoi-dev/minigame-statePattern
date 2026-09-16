@@ -32,7 +32,7 @@ public class Game
         _gameState.Enter(this);
     }
 
-    public void ResetGame()
+    public void ResetBattle()
     {
         _player.Hp = _player.MaxHp;
         _enemy.Hp = _enemy.MaxHp;
