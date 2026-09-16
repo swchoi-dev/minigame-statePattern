@@ -25,9 +25,17 @@ public class Game
     public void Render() => _gameState.Render(this);
     public void Exit() => _gameState.Exit(this);
     
-    public void ChangeState(IGameState gameState)
+    public void ChangeState(IGameState next)
     {
-        _gameState = gameState;
+        _gameState.Exit(this);
+        _gameState = next;
+        _gameState.Enter(this);
+    }
+
+    public void ResetGame()
+    {
+        _player.Hp = _player.MaxHp;
+        _enemy.Hp = _enemy.MaxHp;
     }
     
 }

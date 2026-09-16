@@ -9,15 +9,10 @@ class StatePatternMiniGame
         Game game = new Game(new TitleState());
         while (game.IsRunning)
         {
-            game.Enter();
-            
+            Console.Clear();
             game.Render();
-        
             game.HandleInput();
-        
             game.Update();
-        
-            game.Exit();
         }
     }
 }
